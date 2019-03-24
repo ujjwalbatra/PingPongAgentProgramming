@@ -1,0 +1,34 @@
+package agentsevents
+
+import io.sarl.core.DefaultContextInteractions
+import io.sarl.core.Schedules
+import io.sarl.core.Initialize
+import io.sarl.core.Logging
+
+agent PingAgent {
+
+	// emits an event in the default space of the default context
+	uses DefaultContextInteractions, Schedules, Logging
+
+	on Pong {
+		// log the pong and response ping 
+		info("Receiving Pong #" + occurrence.index)
+		info("Sending Ping #" + (occurrence.index + 1))
+		
+		emit(new Ping(occurrence.index + 1))[it == occurrence.source]
+		// lambda used for setting scope of emit.
+	}
+
+	on Initialize {
+		val task = task("waiting_for_partner")
+
+		task.every(1000) [
+
+			//testing if another agent exist, if yes emit ping
+			if (defaultSpace.participants.size > 1) {
+				emit(new Ping(0))
+				task.cancel	
+			}
+		]	
+	}
+}

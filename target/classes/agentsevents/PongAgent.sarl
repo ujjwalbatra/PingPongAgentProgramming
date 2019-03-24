@@ -1,0 +1,18 @@
+package agentsevents
+
+import io.sarl.core.DefaultContextInteractions
+import io.sarl.core.Logging
+
+agent PongAgent {
+	
+	// emits an event in the default space of the default context
+	uses DefaultContextInteractions, Logging
+	
+	on Ping {
+		info("Receiving Ping #" + occurrence.index)
+		info("Sending Pong #" + occurrence.index)
+		
+		emit(new Pong(occurrence.index))[it == occurrence.source]
+		// lambda used for setting scope of emit.
+	}
+}

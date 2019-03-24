@@ -1,0 +1,22 @@
+package agentsevents
+
+event Ping {
+	// constant due to val keyword
+	val index: int
+	
+	// initialization of constant
+	new(i: int) {
+		index = i
+	}
+}
+
+
+event Pong {
+	
+	val index : int
+
+	// initialization of constant
+	new(i : int) {
+		index = i
+	}
+}

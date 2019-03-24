@@ -1,0 +1,14 @@
+package agentsevents
+
+import io.sarl.core.Initialize
+import io.sarl.core.Lifecycle
+
+agent BootAgent {
+	uses Lifecycle
+
+	on Initialize {
+		spawn(PongAgent)
+		spawn(PingAgent)
+		killMe
+	}
+}
